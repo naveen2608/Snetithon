@@ -1,0 +1,39 @@
+# Importing the necessary modules
+
+import snscrape.modules.twitter as sntwiiter
+import pandas as pd
+import random
+
+# query1 and query are social media pages in twitter
+
+query1="digitalindia,scam lang:en"
+query = "Digital India lang:en"
+
+# two lists to capture the data
+
+tweets_1=[]
+tweets_2=[]
+
+for tweet in sntwiiter.TwitterSearchScraper(query).get_items():
+    
+    #print(vars(tweet))
+    #print(tweet.user.username)
+    #break
+    
+    if(len(tweets_2)==13000):
+        break
+    else:
+        tweets_2.append([tweet.date, tweet.url, tweet.user.username, tweet.content])
+
+#print(tweets)
+for tweet in sntwiiter.TwitterSearchScraper(query1).get_items():
+    tweets_1.append([tweet.date, tweet.url, tweet.user.username, tweet.content])
+
+tweets=tweets_1+tweets_2
+random.shuffle(tweets)
+df=pd.DataFrame(tweets[:1000], columns=['date','url','user name','content'])   
+df1=pd.DataFrame(tweets[1000:], columns=['date','url','user name','content'])
+#print(len(tweets))
+df.to_csv('webscrape_testdata')
+df1.to_csv('webscrape_traindata')
+#print(len(tweets1))
