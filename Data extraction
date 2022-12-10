@@ -14,23 +14,31 @@ query = "Digital India lang:en"
 tweets_1=[]
 tweets_2=[]
 
+#Taking 3000 tweets from below code
+
 for tweet in sntwiiter.TwitterSearchScraper(query).get_items():
     
     #print(vars(tweet))
     #print(tweet.user.username)
     #break
     
-    if(len(tweets_2)==13000):
+    if(len(tweets_2)==3000):
         break
     else:
         tweets_2.append([tweet.date, tweet.url, tweet.user.username, tweet.content])
 
 #print(tweets)
+
+#taking other few tweets from other page
+
 for tweet in sntwiiter.TwitterSearchScraper(query1).get_items():
     tweets_1.append([tweet.date, tweet.url, tweet.user.username, tweet.content])
 
 tweets=tweets_1+tweets_2
 random.shuffle(tweets)
+
+# creating two dataframes for test and train data separtly
+
 df=pd.DataFrame(tweets[:1000], columns=['date','url','user name','content'])   
 df1=pd.DataFrame(tweets[1000:], columns=['date','url','user name','content'])
 #print(len(tweets))
