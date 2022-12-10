@@ -42,6 +42,9 @@ random.shuffle(tweets)
 df=pd.DataFrame(tweets[:1000], columns=['date','url','user name','content'])   
 df1=pd.DataFrame(tweets[1000:], columns=['date','url','user name','content'])
 #print(len(tweets))
+
+# keeping in separate csv files
+
 df.to_csv('webscrape_testdata')
 df1.to_csv('webscrape_traindata')
 #print(len(tweets1))
